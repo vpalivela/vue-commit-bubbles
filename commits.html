@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Commit Bubbles</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular.min.js"></script>
+    <script>
+        function CommitBubbles($scope, $log) {
+
+            $scope.commits = [
+              {
+                time: 100,
+                hash: "1234567890",
+                testPercentage: 100,
+                size: 44,
+                author: "John Doe"
+              },
+              {
+                time: 455,
+                hash: "1234567890",
+                testPercentage: 15,
+                size: 22,
+                author: "Mildred"
+              }
+            ];
+        }
+    </script>
+</head>
+<body ng-app ng-controller="CommitBubbles" bgcolor="#FFFFFF">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xl="http://www.w3.org/1999/xlink" version="1.1" width="1200" height="180" xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <g stroke="none" stroke-opacity="1" stroke-dasharray="none" fill="none" fill-opacity="1">
+    <g>
+      <circle ng-repeat="commit in commits" ng-attr-cx="{{commit.time}}" ng-attr-cy="{{commit.testPercentage}}" ng-attr-r="{{commit.size}}" fill="red"/>
+    </g>
+  </g>
+</svg>
+</body>
+</html>
