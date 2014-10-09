@@ -4,25 +4,25 @@
     <title>Commit Bubbles</title>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular.min.js"></script>
     <script src="http://underscorejs.org/underscore-min.js"></script>
-	<script src="http://vitalets.github.io/checklist-model/checklist-model.js"></script>
+    <script src="http://vitalets.github.io/checklist-model/checklist-model.js"></script>
     <script>
         var app = angular.module("app", ["checklist-model"]);
-        app.controller('CommitBubbles', function($scope) {
+        app.controller('CommitBubbles', function ($scope) {
             $scope.commits = [
-              {
-                time: 100,
-                hash: "1234567890",
-                testPercentage: 100,
-                size: 44,
-                author: "John Doe"
-              },
-              {
-                time: 455,
-                hash: "2342342344",
-                testPercentage: 15,
-                size: 22,
-                author: "Mildred"
-              }
+                {
+                    time:100,
+                    hash:"1234567890",
+                    testPercentage:100,
+                    size:44,
+                    author:"John Doe"
+                },
+                {
+                    time:455,
+                    hash:"2342342344",
+                    testPercentage:15,
+                    size:22,
+                    author:"Mildred"
+                }
             ];
             $scope.authors = _.pluck($scope.commits, 'author');
             $scope.sel = {};
@@ -32,39 +32,41 @@
 </head>
 <body ng-app="app" ng-controller="CommitBubbles" bgcolor="#FFFFFF">
 <div>Select:
-<label ng-repeat="author in authors">
-  <input type="checkbox" checklist-model="sel.authors" checklist-value="author"> {{author}}
-</label>
+    <label ng-repeat="author in authors">
+        <input type="checkbox" checklist-model="sel.authors" checklist-value="author"> {{author}}
+    </label>
 </div>
-
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xl="http://www.w3.org/1999/xlink" version="1.1" width="1200" height="600" xmlns:dc="http://purl.org/dc/elements/1.1/">
-  <g>
-    <text x="0" y="20" font-family="Verdana" font-size="20">
-      All Test
-    </text>
-  </g>
-  <g>
-    <line x1="100" y1="200" x2="1000" y2="200" style="stroke:rgb(0,0,0);stroke-width:2" />
-    <text x="0" y="210" font-family="Verdana" font-size="20">
-      Equal
-    </text>
-  </g>
-  <g>
-    <text x="0" y="380" font-family="Verdana" font-size="20">
-      All Prod
-    </text>
-  </g>
-  <g>
-    <line x1="100" y1="0" x2="100" y2="400" style="stroke:rgb(0,0,0);stroke-width:2" />
-    <text x="900" y="250" font-family="Verdana" font-size="20">
-      Time
-    </text>
-  </g>
-  <g stroke="none" stroke-opacity="1" stroke-dasharray="none" fill="none" fill-opacity="1">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xl="http://www.w3.org/1999/xlink" version="1.1" width="1200" height="600"
+     xmlns:dc="http://purl.org/dc/elements/1.1/">
     <g>
-      <circle ng-repeat="commit in commits" ng-show="sel.authors.indexOf(commit.author) > -1" ng-attr-cx="{{100 + commit.time}}" ng-attr-cy="{{commit.testPercentage}}" ng-attr-r="{{commit.size}}" fill="red"/>
+        <text x="0" y="20" font-family="Verdana" font-size="20">
+            All Test
+        </text>
     </g>
-  </g>
+    <g>
+        <line x1="100" y1="200" x2="1000" y2="200" style="stroke:rgb(0,0,0);stroke-width:2"/>
+        <text x="0" y="210" font-family="Verdana" font-size="20">
+            Equal
+        </text>
+    </g>
+    <g>
+        <text x="0" y="380" font-family="Verdana" font-size="20">
+            All Prod
+        </text>
+    </g>
+    <g>
+        <line x1="100" y1="0" x2="100" y2="400" style="stroke:rgb(0,0,0);stroke-width:2"/>
+        <text x="900" y="250" font-family="Verdana" font-size="20">
+            Time
+        </text>
+    </g>
+    <g stroke="none" stroke-opacity="1" stroke-dasharray="none" fill="none" fill-opacity="1">
+        <g>
+            <circle ng-repeat="commit in commits" ng-show="sel.authors.indexOf(commit.author) > -1"
+                    ng-attr-cx="{{100 + commit.time}}" ng-attr-cy="{{commit.testPercentage}}"
+                    ng-attr-r="{{commit.size}}" fill="red"/>
+        </g>
+    </g>
 </svg>
 <br/>
 Debugging:
