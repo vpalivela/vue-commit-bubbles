@@ -10,6 +10,7 @@
         app.controller('CommitBubbles', function ($scope) {
             $scope.commits = [
                 {
+                    ts:"1288222623006",
                     time:100,
                     hash:"1234567890",
                     testPercentage:100,
@@ -17,6 +18,7 @@
                     author:"John Doe"
                 },
                 {
+                    ts:"1288121623006",
                     time:780,
                     hash:"13432435645",
                     testPercentage:30,
@@ -24,6 +26,7 @@
                     author:"John Doe"
                 },
                 {
+                    ts:"1288323623006",
                     time:455,
                     hash:"2342342344",
                     testPercentage:15,
@@ -34,6 +37,8 @@
             $scope.authors = _.uniq(_.pluck($scope.commits, 'author'));
             $scope.sel = {};
             $scope.sel.authors = $scope.authors.slice(0);
+            $scope.from = _.min($scope.commits, "time").ts;
+            $scope.to = _.max($scope.commits, "time").ts;
         });
     </script>
 </head>
@@ -76,6 +81,9 @@ Authors:
 {{authors | json}}
 Selected:
 {{sel.authors | json}}
+From to:
+{{from | date:'yyyy-MM-dd HH:mm:ss Z'}} - {{to | date:'yyyy-MM-dd HH:mm:ss Z'}}
+
 </pre>
 </body>
 </html>
