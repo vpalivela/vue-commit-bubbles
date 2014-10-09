@@ -3,9 +3,11 @@
 <head>
     <title>Commit Bubbles</title>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular.min.js"></script>
+    <script src="http://underscorejs.org/underscore-min.js"></script>
+	<script src="http://vitalets.github.io/checklist-model/checklist-model.js"></script>
     <script>
-        function CommitBubbles($scope, $log) {
-
+        var app = angular.module("app", ["checklist-model"]);
+        app.controller('CommitBubbles', function($scope) {
             $scope.commits = [
               {
                 time: 100,
@@ -16,32 +18,26 @@
               },
               {
                 time: 455,
-                hash: "1234567890",
+                hash: "2342342344",
                 testPercentage: 15,
                 size: 22,
                 author: "Mildred"
               }
             ];
-        }
-        var directives = angular.module('directives', []);
-        directives.directive('showonhoverparent',
-           function() {
-              return {
-                 link : function(scope, element, attrs) {
-                    element.parent().bind('mouseenter', function() {
-                        element.show();
-                    });
-                    element.parent().bind('mouseleave', function() {
-                         element.hide();
-                    });
-               }
-           };
+            $scope.authors = _.pluck($scope.commits, 'author');
+            $scope.sel = {};
+            $scope.sel.authors = $scope.authors.slice(0);
         });
-        
     </script>
 </head>
-<body ng-app ng-controller="CommitBubbles" bgcolor="#FFFFFF">
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xl="http://www.w3.org/1999/xlink" version="1.1" width="1200" height="1100" xmlns:dc="http://purl.org/dc/elements/1.1/">
+<body ng-app="app" ng-controller="CommitBubbles" bgcolor="#FFFFFF">
+<div>Select:
+<label ng-repeat="author in authors">
+  <input type="checkbox" checklist-model="sel.authors" checklist-value="author"> {{author}}
+</label>
+</div>
+
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xl="http://www.w3.org/1999/xlink" version="1.1" width="1200" height="600" xmlns:dc="http://purl.org/dc/elements/1.1/">
   <g>
     <text x="0" y="20" font-family="Verdana" font-size="20">
       All Test
@@ -66,9 +62,19 @@
   </g>
   <g stroke="none" stroke-opacity="1" stroke-dasharray="none" fill="none" fill-opacity="1">
     <g>
-      <circle ng-repeat="commit in commits" ng-attr-cx="{{100 + commit.time}}" ng-attr-cy="{{commit.testPercentage}}" ng-attr-r="{{commit.size}}" fill="red"/>
+      <circle ng-repeat="commit in commits" ng-show="sel.authors.indexOf(commit.author) > -1" ng-attr-cx="{{100 + commit.time}}" ng-attr-cy="{{commit.testPercentage}}" ng-attr-r="{{commit.size}}" fill="red"/>
     </g>
   </g>
 </svg>
+<br/>
+Debugging:
+<pre>
+Commits: 
+{{commits | json}}
+Authors:
+{{authors | json}}
+Selected:
+{{sel.authors | json}}
+</pre>
 </body>
 </html>
