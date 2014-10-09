@@ -26,10 +26,32 @@
     </script>
 </head>
 <body ng-app ng-controller="CommitBubbles" bgcolor="#FFFFFF">
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xl="http://www.w3.org/1999/xlink" version="1.1" width="1200" height="180" xmlns:dc="http://purl.org/dc/elements/1.1/">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xl="http://www.w3.org/1999/xlink" version="1.1" width="1200" height="1100" xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <g>
+    <text x="0" y="20" font-family="Verdana" font-size="20">
+      All Test
+    </text>
+  </g>
+  <g>
+    <line x1="100" y1="200" x2="1000" y2="200" style="stroke:rgb(0,0,0);stroke-width:2" />
+    <text x="0" y="210" font-family="Verdana" font-size="20">
+      Equal
+    </text>
+  </g>
+  <g>
+    <text x="0" y="380" font-family="Verdana" font-size="20">
+      All Prod
+    </text>
+  </g>
+  <g>
+    <line x1="100" y1="0" x2="100" y2="400" style="stroke:rgb(0,0,0);stroke-width:2" />
+    <text x="900" y="250" font-family="Verdana" font-size="20">
+      Time
+    </text>
+  </g>
   <g stroke="none" stroke-opacity="1" stroke-dasharray="none" fill="none" fill-opacity="1">
     <g>
-      <circle ng-repeat="commit in commits" ng-attr-cx="{{commit.time}}" ng-attr-cy="{{commit.testPercentage}}" ng-attr-r="{{commit.size}}" fill="red"/>
+      <circle ng-repeat="commit in commits" ng-attr-cx="{{100 + commit.time}}" ng-attr-cy="{{commit.testPercentage}}" ng-attr-r="{{commit.size}}" fill="red"/>
     </g>
   </g>
 </svg>
