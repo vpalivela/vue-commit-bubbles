@@ -48,8 +48,9 @@
         <line x1="100" y1="200" x2="1000" y2="200" />
         <line x1="100" y1="0" x2="100" y2="400"/>
     </g>
-    <g style="stroke:rgb(0,0,0);stroke-width:0.5">
-        <line ng-repeat="i in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]" x1="100" ng-attr-y1="{{400 - (40 * i)}}" x2="1000" ng-attr-y2="{{400 - (40 * i)}}" />
+    <g font-family="Verdana" font-size="8" ng-repeat="i in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]" style="stroke:rgb(0,0,0);stroke-width:0.5">
+        <line x1="100" stroke-dasharray="10,35" ng-attr-y1="{{402 - (40 * i)}}" x2="1000" ng-attr-y2="{{400 - (40 * i)}}" />
+        <text fill="white" x="115" ng-attr-y="{{403 - (40 * i)}}">{{100 - (10*i)}}:{{(10*i)}}</text>
     </g>
     <g stroke="none" stroke-opacity="1" stroke-dasharray="none" fill="none" fill-opacity="1">
         <g>
