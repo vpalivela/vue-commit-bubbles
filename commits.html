@@ -17,6 +17,13 @@
                     author:"John Doe"
                 },
                 {
+                    time:780,
+                    hash:"13432435645",
+                    testPercentage:30,
+                    size:81,
+                    author:"John Doe"
+                },
+                {
                     time:455,
                     hash:"2342342344",
                     testPercentage:15,
@@ -24,7 +31,7 @@
                     author:"Mildred"
                 }
             ];
-            $scope.authors = _.pluck($scope.commits, 'author');
+            $scope.authors = _.uniq(_.pluck($scope.commits, 'author'));
             $scope.sel = {};
             $scope.sel.authors = $scope.authors.slice(0);
         });
