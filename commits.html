@@ -10,24 +10,28 @@
         app.controller('CommitBubbles', function ($scope) {
             $scope.commits = [
                 {
-                    ts:"1288222623006",
-                    time:100,
+                    ts:1288222623006,
                     hash:"1234567890",
                     testPercentage:100,
                     size:44,
                     author:"John Doe"
                 },
                 {
-                    ts:"1288121623006",
-                    time:780,
+                    ts:1288121623006,
                     hash:"13432435645",
                     testPercentage:30,
                     size:81,
                     author:"John Doe"
                 },
                 {
-                    ts:"1288323623006",
-                    time:455,
+                    ts:1288122623006,
+                    hash:"13432435645",
+                    testPercentage:50,
+                    size:50,
+                    author:"John Doe"
+                },
+                {
+                    ts:1288323623006,
                     hash:"2342342344",
                     testPercentage:15,
                     size:22,
@@ -37,8 +41,8 @@
             $scope.authors = _.uniq(_.pluck($scope.commits, 'author'));
             $scope.sel = {};
             $scope.sel.authors = $scope.authors.slice(0);
-            $scope.from = _.min($scope.commits, "time").ts;
-            $scope.to = _.max($scope.commits, "time").ts;
+            $scope.from = _.min($scope.commits, "ts").ts;
+            $scope.to = _.max($scope.commits, "ts").ts;
         });
     </script>
 </head>
@@ -67,8 +71,8 @@
     <g stroke="none" stroke-opacity="1" stroke-dasharray="none" fill="none" fill-opacity="1">
         <g>
             <circle ng-repeat="commit in commits" ng-show="sel.authors.indexOf(commit.author) > -1"
-                    ng-attr-cx="{{100 + commit.time}}" ng-attr-cy="{{commit.testPercentage}}"
-                    ng-attr-r="{{commit.size}}" fill="red"/>
+                    ng-attr-cx="{{100 + (commit.ts - from) * 900 / (to - from) }}" ng-attr-cy="{{400 - (commit.testPercentage * 4) }}"
+                    ng-attr-r="{{commit.size}}" fill="red" fill-opacity="0.5"/>
         </g>
     </g>
 </svg>
@@ -81,9 +85,8 @@ Authors:
 {{authors | json}}
 Selected:
 {{sel.authors | json}}
-From to:
+From - to:
 {{from | date:'yyyy-MM-dd HH:mm:ss Z'}} - {{to | date:'yyyy-MM-dd HH:mm:ss Z'}}
-
 </pre>
 </body>
 </html>
