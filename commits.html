@@ -62,23 +62,23 @@
      xmlns:dc="http://purl.org/dc/elements/1.1/">
     <g font-family="Verdana" font-size="20">
         <text x="0" y="20">All Test</text>
-        <text x="0" y="210">Equal</text>
-        <text x="0" y="380">All Prod</text>
+        <text x="0" y="310">Equal</text>
+        <text x="0" y="595">All Prod</text>
         <text x="900" y="250">Time</text>
     </g>
     <g style="stroke:rgb(0,0,0);stroke-width:2">
-        <line x1="100" y1="200" x2="1000" y2="200" />
-        <line x1="100" y1="0" x2="100" y2="400"/>
+        <line x1="100" y1="300" x2="1200" y2="300" />
+        <line x1="100" y1="0" x2="100" y2="600"/>
     </g>
     <g font-family="Verdana" font-size="8" ng-repeat="i in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]" style="stroke:rgb(0,0,0);stroke-width:0.5">
-        <line x1="100" stroke-dasharray="10,35" ng-attr-y1="{{402 - (40 * i)}}" x2="1000" ng-attr-y2="{{400 - (40 * i)}}" />
-        <text fill="white" x="115" ng-attr-y="{{403 - (40 * i)}}">{{100 - (10*i)}}:{{(10*i)}}</text>
+        <line x1="100" stroke-dasharray="10,35" ng-attr-y1="{{602 - (60 * i)}}" x2="1200" ng-attr-y2="{{600 - (60 * i)}}" />
+        <text fill="white" x="70" ng-attr-y="{{603 - (60 * i)}}">{{100 - (10*i)}}:{{(10*i)}}</text>
     </g>
     <g stroke="black">
         <g>
             <circle ng-repeat="commit in commits" ng-show="selected.authors.indexOf(commit.author) > -1"
-                    ng-attr-cx="{{100 + (commit.ts - from) * 900 / (to - from) }}"
-                    ng-attr-cy="{{400 - (commit.testPercentage * 4) }}"
+                    ng-attr-cx="{{100 + (commit.ts - from) * 1100 / (to - from) }}"
+                    ng-attr-cy="{{600 - (commit.testPercentage * 6) }}"
                     ng-attr-r="{{commit.size}}"
                     ng-attr-stroke-opacity="{{consts.strokeIfCommitSelected[selected.commit.hash == commit.hash]}}"
                     ng-attr-fill="{{colors[authors.indexOf(commit.author)]}}" fill-opacity="0.5"
@@ -87,6 +87,7 @@
     </g>
 </svg>
 <div ng-show="selected.commit">
+    <span><b>Selected Commit</b></span>
     <span>Hash: {{selected.commit.hash}}</span>
     <span>Author: {{selected.commit.author}}</span>
     <span>Date/Time: {{selected.commit.ts | date:'yyyy-MM-dd HH:mm:ss Z'}}</span>
