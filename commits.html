@@ -8,11 +8,6 @@
     <script>
         var app = angular.module("app", ["checklist-model"]);
         app.controller('CommitBubbles', function ($scope) {
-            $scope.consts = {
-              strokeIfCommitSelected : []
-            };
-            $scope.consts.strokeIfCommitSelected[true] = 1;
-            $scope.consts.strokeIfCommitSelected[false] = 0;
             $scope.commits = [
                 {
                     ts:1288222623006,
@@ -64,14 +59,15 @@
         <text x="0" y="20">All Test</text>
         <text x="0" y="310">Equal</text>
         <text x="0" y="595">All Prod</text>
-        <text x="900" y="250">Time</text>
+        <text x="1130" y="320">Time &#10148;</text>
     </g>
     <g style="stroke:rgb(0,0,0);stroke-width:2">
         <line x1="100" y1="300" x2="1200" y2="300" />
         <line x1="100" y1="0" x2="100" y2="600"/>
     </g>
     <g font-family="Verdana" font-size="8" ng-repeat="i in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]" style="stroke:rgb(0,0,0);stroke-width:0.5">
-        <line x1="100" stroke-dasharray="10,35" ng-attr-y1="{{602 - (60 * i)}}" x2="1200" ng-attr-y2="{{600 - (60 * i)}}" />
+
+        <line ng-show="i != 5" x1="100" stroke-dasharray="10,35" ng-attr-y1="{{602 - (60 * i)}}" x2="1200" ng-attr-y2="{{600 - (60 * i)}}" />
         <text fill="white" x="70" ng-attr-y="{{603 - (60 * i)}}">{{100 - (10*i)}}:{{(10*i)}}</text>
     </g>
     <g stroke="black">
@@ -80,7 +76,7 @@
                     ng-attr-cx="{{100 + (commit.ts - from) * 1100 / (to - from) }}"
                     ng-attr-cy="{{600 - (commit.testPercentage * 6) }}"
                     ng-attr-r="{{commit.size}}"
-                    ng-attr-stroke-opacity="{{consts.strokeIfCommitSelected[selected.commit.hash == commit.hash]}}"
+                    ng-attr-stroke-opacity="{{(selected.commit === commit) ? 1 : 0}}"
                     ng-attr-fill="{{colors[authors.indexOf(commit.author)]}}" fill-opacity="0.5"
                     ng-click="selected.commit = commit"/>
         </g>
@@ -102,7 +98,7 @@ Commits:
 Authors:
 {{authors | json}}
 Selected:
-{{sel | json}}
+{{selected | json}}
 From - to:
 {{from | date:'yyyy-MM-dd HH:mm:ss Z'}} - {{to | date:'yyyy-MM-dd HH:mm:ss Z'}}
 </pre>
