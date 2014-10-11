@@ -8,6 +8,11 @@
     <script>
         var app = angular.module("app", ["checklist-model"]);
         app.controller('CommitBubbles', function ($scope) {
+            $scope.consts = {
+              strokeIfCommitSelected : []
+            };
+            $scope.consts.strokeIfCommitSelected[true] = 1;
+            $scope.consts.strokeIfCommitSelected[false] = 0;
             $scope.commits = [
                 {
                     ts:1288222623006,
@@ -25,10 +30,10 @@
                 },
                 {
                     ts:1288122623006,
-                    hash:"13432435645",
+                    hash:"12232435645",
                     testPercentage:50,
                     size:50,
-                    author:"John Doe"
+                    author:"Hector"
                 },
                 {
                     ts:1288323623006,
@@ -39,17 +44,18 @@
                 }
             ];
             $scope.authors = _.uniq(_.pluck($scope.commits, 'author'));
-            $scope.sel = {};
-            $scope.sel.authors = $scope.authors.slice(0);
+            $scope.selected = {};
+            $scope.selected.authors = $scope.authors.slice(0);
             $scope.from = _.min($scope.commits, "ts").ts;
             $scope.to = _.max($scope.commits, "ts").ts;
+            $scope.colors = ["#FFA07A","#20B2AA","#778899","#B0C4DE","#F5F5DC","#00FF00","#000000","#32CD32","#FAF0E6","#0000FF","#FF00FF","#8A2BE2","#800000","#A52A2A","#66CDAA","#DEB887","#0000CD","#5F9EA0","#7FFF00","#9370DB","#D2691E","#FF7F50","#7B68EE","#6495ED","#48D1CC","#DC143C","#C71585","#00FFFF","#191970","#00008B","#F5FFFA","#008B8B","#FFE4E1","#B8860B","#A9A9A9","#006400","#000080","#BDB76B","#8B008B","#808000","#6B8E23","#FF8C00","#FFA500","#9932CC","#FF4500","#8B0000","#DA70D6","#E9967A","#EEE8AA","#8FBC8F","#98FB98","#483D8B","#AFEEEE","#2F4F4F","#DB7093","#00CED1","#9400D3","#FFDAB9","#FF1493","#CD853F","#00BFFF","#FFC0CB","#696969","#DDA0DD","#1E90FF","#B0E0E6","#B22222","#800080","#FFFAF0","#FF0000","#228B22","#BC8F8F","#FF00FF","#4169E1","#DCDCDC","#FA8072","#FFD700","#FAA460","#DAA520","#2E8B57","#808080","#008000","#A0522D","#ADFF2F","#C0C0C0","#87CEEB","#FF69B4","#6A5ACD","#CD5C5C","#708090","#4B0082","#00FF7F","#F0E68C","#4682B4","#E6E6FA","#D2B48C","#008080","#7CFC00","#D8BFD8","#FFFACD","#FF6347","#ADD8E6","#40E0D0","#F08080","#EE82EE","#F5DEB3","#FAFAD2","#90EE90","#D3D3D3","#FFFF00","#FFB6C1"];
         });
     </script>
 </head>
 <body ng-app="app" ng-controller="CommitBubbles" bgcolor="#FFFFFF">
-<div>Select:
-    <label ng-repeat="author in authors">
-        <input type="checkbox" checklist-model="sel.authors" checklist-value="author"> {{author}}
+<div>Show authors:
+    <label ng-repeat="author in authors" ng-attr-style="{{'color: ' + colors[$index] }}">
+        <input type="checkbox" checklist-model="selected.authors" checklist-value="author"> {{author}}
     </label>
 </div>
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xl="http://www.w3.org/1999/xlink" version="1.1" width="1200" height="600"
@@ -68,14 +74,25 @@
         <line x1="100" stroke-dasharray="10,35" ng-attr-y1="{{402 - (40 * i)}}" x2="1000" ng-attr-y2="{{400 - (40 * i)}}" />
         <text fill="white" x="115" ng-attr-y="{{403 - (40 * i)}}">{{100 - (10*i)}}:{{(10*i)}}</text>
     </g>
-    <g stroke="none" stroke-opacity="1" stroke-dasharray="none" fill="none" fill-opacity="1">
+    <g stroke="black">
         <g>
-            <circle ng-repeat="commit in commits" ng-show="sel.authors.indexOf(commit.author) > -1"
-                    ng-attr-cx="{{100 + (commit.ts - from) * 900 / (to - from) }}" ng-attr-cy="{{400 - (commit.testPercentage * 4) }}"
-                    ng-attr-r="{{commit.size}}" fill="red" fill-opacity="0.5"/>
+            <circle ng-repeat="commit in commits" ng-show="selected.authors.indexOf(commit.author) > -1"
+                    ng-attr-cx="{{100 + (commit.ts - from) * 900 / (to - from) }}"
+                    ng-attr-cy="{{400 - (commit.testPercentage * 4) }}"
+                    ng-attr-r="{{commit.size}}"
+                    ng-attr-stroke-opacity="{{consts.strokeIfCommitSelected[selected.commit.hash == commit.hash]}}"
+                    ng-attr-fill="{{colors[authors.indexOf(commit.author)]}}" fill-opacity="0.5"
+                    ng-click="selected.commit = commit"/>
         </g>
     </g>
 </svg>
+<div ng-show="selected.commit">
+    <span>Hash: {{selected.commit.hash}}</span>
+    <span>Author: {{selected.commit.author}}</span>
+    <span>Date/Time: {{selected.commit.ts | date:'yyyy-MM-dd HH:mm:ss Z'}}</span>
+    <span>Test Percentage: {{selected.commit.testPercentage}}</span>
+    <span>Size: {{selected.commit.size}}</span>
+</div>
 <br/>
 Debugging:
 <pre>
@@ -84,7 +101,7 @@ Commits:
 Authors:
 {{authors | json}}
 Selected:
-{{sel.authors | json}}
+{{sel | json}}
 From - to:
 {{from | date:'yyyy-MM-dd HH:mm:ss Z'}} - {{to | date:'yyyy-MM-dd HH:mm:ss Z'}}
 </pre>
