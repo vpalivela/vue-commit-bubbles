@@ -8,6 +8,10 @@
     <script>
         var app = angular.module("app", ["checklist-model"]);
         app.controller('CommitBubbles', function ($scope) {
+            $scope.c = {
+                ht: 600,
+                topMargin: 20
+            };
             $scope.commits = [
                 {
                     ts:1288222623006,
@@ -24,7 +28,7 @@
                     author:"John Doe"
                 },
                 {
-                    ts:1288122623006,
+                    ts:1288128023006,
                     hash:"12232435645",
                     testPercentage:50,
                     size:50,
@@ -52,28 +56,28 @@
         <input type="checkbox" checklist-model="selected.authors" checklist-value="author"> {{author}}
     </label>
 </div>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xl="http://www.w3.org/1999/xlink" version="1.1" width="1200" height="600"
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xl="http://www.w3.org/1999/xlink" version="1.1" width="1220" ng-attr-height="{{c.ht + c.topMargin + 5}}"
      xmlns:dc="http://purl.org/dc/elements/1.1/">
-    <g font-family="Verdana" font-size="20">
-        <text x="0" y="20">All Test</text>
-        <text x="0" y="310">Equal</text>
-        <text x="0" y="595">All Prod</text>
-        <text x="1130" y="320">Time &#10148;</text>
+    <g font-family="Verdana" font-size="16">
+        <text x="0" ng-attr-y="{{c.topMargin + 8}}">All Test</text>
+        <text x="0" ng-attr-y="{{c.ht/2 + 5 + c.topMargin}}">Equal</text>
+        <text x="0" ng-attr-y="{{c.ht + c.topMargin}}">All Prod</text>
+        <text x="1140" ng-attr-y="{{c.ht/2 + 17 + c.topMargin}}">Time &#10148;</text>
     </g>
     <g style="stroke:rgb(0,0,0);stroke-width:2">
-        <line x1="100" y1="300" x2="1200" y2="300" />
-        <line x1="100" y1="0" x2="100" y2="600"/>
+        <line x1="100" ng-attr-y1="{{c.ht/2 + c.topMargin}}" x2="1200" ng-attr-y2="{{c.ht/2 + c.topMargin}}" />
+        <line x1="100" ng-attr-y1="{{c.topMargin +2}}" x2="100" ng-attr-y2="{{c.ht + c.topMargin+2}}"/>
     </g>
-    <g font-family="Verdana" font-size="8" ng-repeat="i in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]" style="stroke:rgb(0,0,0);stroke-width:0.5">
+    <g font-family="Verdana" font-size="8" ng-repeat="i in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]" style="stroke:rgb(0,0,0);stroke-width:0.5">
 
-        <line ng-show="i != 5" x1="100" stroke-dasharray="10,35" ng-attr-y1="{{602 - (60 * i)}}" x2="1200" ng-attr-y2="{{600 - (60 * i)}}" />
-        <text fill="white" x="70" ng-attr-y="{{603 - (60 * i)}}">{{100 - (10*i)}}:{{(10*i)}}</text>
+        <line ng-show="i != 5" x1="100" stroke-dasharray="10,35" ng-attr-y1="{{c.ht + 2 - (c.ht/10 * i) + c.topMargin}}" x2="1200" ng-attr-y2="{{c.ht - (c.ht/10 * i) + c.topMargin}}" />
+        <text fill="white" x="70" ng-attr-y="{{c.ht + 3  - (c.ht/10 * i) + c.topMargin}}">{{100 - (10*i)}}:{{(10*i)}}</text>
     </g>
     <g stroke="black">
         <g>
             <circle ng-repeat="commit in commits" ng-show="selected.authors.indexOf(commit.author) > -1"
                     ng-attr-cx="{{100 + (commit.ts - from) * 1100 / (to - from) }}"
-                    ng-attr-cy="{{600 - (commit.testPercentage * 6) }}"
+                    ng-attr-cy="{{c.ht - (commit.testPercentage * 6) + c.topMargin}}"
                     ng-attr-r="{{commit.size}}"
                     ng-attr-stroke-opacity="{{(selected.commit === commit) ? 1 : 0}}"
                     ng-attr-fill="{{colors[authors.indexOf(commit.author)]}}" fill-opacity="0.5"
