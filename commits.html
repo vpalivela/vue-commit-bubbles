@@ -48,10 +48,12 @@
             $scope.selected = { authors: $scope.authors.slice(0) };
             $scope.from = _.min($scope.commits, "ts").ts;
             $scope.to = _.max($scope.commits, "ts").ts;
+            $scope.timeSpan = moment.duration(moment($scope.from).diff(moment($scope.to))).humanize();
         });
     </script>
 </head>
 <body ng-app="app" ng-controller="CommitBubbles" bgcolor="#FFFFFF">
+<h1>{{timeSpan}} shown between {{from | date:'MM/dd/yy HH:mm'}} and {{to | date:'MM/dd/yy HH:mm'}}</h1>
 <div>Show authors:
     <label ng-repeat="author in authors" ng-attr-style="{{'color: ' + c.colors[$index] }}">
         <input type="checkbox" checklist-model="selected.authors" checklist-value="author"> {{author}}
@@ -94,17 +96,5 @@
     <span>Test Percentage: {{selected.commit.testPercentage}}</span>
     <span>Size: {{selected.commit.size}}</span>
 </div>
-<br/>
-Debugging:
-<pre>
-Commits: 
-{{commits | json}}
-Authors:
-{{authors | json}}
-Selected:
-{{selected | json}}
-From - to:
-{{from | date:'yyyy-MM-dd HH:mm:ss Z'}} - {{to | date:'yyyy-MM-dd HH:mm:ss Z'}}
-</pre>
 </body>
 </html>
