@@ -39,6 +39,13 @@
                     author:"Hector"
                 },
                 {
+                    ts:1288202823006,
+                    hash:"12332343455",
+                    testPercentage:55,
+                    size:50,
+                    author:"Hector"
+                },
+                {
                     ts:1288323623006,
                     hash:"2342342344",
                     testPercentage:15,
@@ -55,8 +62,12 @@
     </script>
 </head>
 <body ng-app="app" ng-controller="CommitBubbles" bgcolor="#FFFFFF">
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xl="http://www.w3.org/1999/xlink" version="1.1" width="1220" ng-attr-height="{{c.chartHeight + c.topMargin + 5}}"
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xl="http://www.w3.org/1999/xlink" version="1.1" width="1220"
+     ng-attr-height="{{c.chartHeight + c.topMargin + 5}}"
      xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <g>
+        <rect fill="#FEFCFF" x="0" y="{{c.topMargin}}" width="1200" ng-attr-height="{{c.chartHeight}}" ng-click="selected.commit = false"/>
+    </g>
     <g font-family="Verdana" font-size="16">
         <text x="0" ng-attr-y="{{c.topMargin + 8}}">All Test</text>
         <text x="0" ng-attr-y="{{c.chartHeight/2 + 5 + c.topMargin}}">Equal</text>
@@ -69,7 +80,9 @@
     </g>
     <g font-family="Verdana" font-size="8" ng-repeat="i in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]" style="stroke:rgb(0,0,0);stroke-width:0.5">
 
-        <line ng-show="i != 5" x1="100" stroke-dasharray="10,35" ng-attr-y1="{{c.chartHeight + 2 - (c.chartHeight/10 * i) + c.topMargin}}" x2="1200" ng-attr-y2="{{c.chartHeight - (c.chartHeight/10 * i) + c.topMargin}}" />
+        <line ng-show="i != 5" x1="100" stroke-dasharray="10,35"
+              ng-attr-y1="{{c.chartHeight + 2 - (c.chartHeight/10 * i) + c.topMargin}}" x2="1200"
+              ng-attr-y2="{{c.chartHeight - (c.chartHeight/10 * i) + c.topMargin}}" />
         <text fill="white" x="70" ng-attr-y="{{c.chartHeight + 3  - (c.chartHeight/10 * i) + c.topMargin}}">{{100 - (10*i)}}:{{(10*i)}}</text>
     </g>
     <g stroke="black">
@@ -94,14 +107,16 @@
 
         </body>
     </foreignObject>
+    <g font-family="Verdana" font-size="16" ng-show="selected.commit" ng-click="selected.commit = false">
+        <rect style="stroke:rgb(0,0,0);stroke-width:2" x="300" y="300" height="300" width="400"
+              fill="white" opacity="0.7"/>
+        <text x="320" y="330">Selected Commit</text>
+        <text x="320" y="380">Hash: {{selected.commit.hash}}</text>
+        <text x="320" y="430">Author: {{selected.commit.author}}</text>
+        <text x="320" y="480">Date/Time: {{selected.commit.ts | date:'yyyy-MM-dd HH:mm:ss Z'}}</text>
+        <text x="320" y="530">Size: {{selected.commit.size}}</text>
+        <text x="320" y="580">Test Percentage: {{selected.commit.testPercentage}}</text>
+    </g>
 </svg>
-<div ng-show="selected.commit">
-    <span><b>Selected Commit</b></span>
-    <span>Hash: {{selected.commit.hash}}</span>
-    <span>Author: {{selected.commit.author}}</span>
-    <span>Date/Time: {{selected.commit.ts | date:'yyyy-MM-dd HH:mm:ss Z'}}</span>
-    <span>Test Percentage: {{selected.commit.testPercentage}}</span>
-    <span>Size: {{selected.commit.size}}</span>
-</div>
 </body>
 </html>
