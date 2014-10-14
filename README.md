@@ -1,9 +1,3 @@
-Mockup idea:
+Go see the finished product on the gh-pages branch, or click [here](http://paul-hammant.github.io/angular-commit-bubbles/commits.html)
 
-![alt mock] (https://raw.githubusercontent.com/javanmard/angular-commit-bubbles/master/mockup.png)
-
-Reference Links:
-
-SVG To Angular: [ http://paulhammant.com/2014/03/07/omnigraffle-svg-to-angular-html-workflow/ ]
-
-Angular Reference App: [ http://paulhammant.com/files/states_incarceration_svg.html ]
+Some years ago, Jon Wolter blogged about [a Misko Hevery idea that never made it out of Google](http://jawspeak.com/2011/07/16/improving-developers-enthusiasm-for-unit-tests-using-bubble-charts).
